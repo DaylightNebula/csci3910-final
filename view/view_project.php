@@ -88,7 +88,20 @@ if (empty($search)) {
                 <th><?php echo $task['title'] ?></th>
                 <th><?php echo $task['description'] ?></th>
                 <th><?php echo $task['category'] ?></th>
-                <th><?php echo $task['status'] ?></th>
+
+                <!-- Add status -->
+                <th><?php
+                    switch ($task['status']) {
+                        case "0": echo "N/A"; break;
+                        case "1": echo "Todo"; break;
+                        case "2": echo "In Progress"; break;
+                        case "3": echo "Done"; break;
+                        case "4": echo "Waiting"; break;
+                        case "5": echo "Canceled"; break;
+                    }
+                ?></th>
+
+                <!-- Add due date -->
                 <th><?php echo $task['due_date'] ?></th>
 
                 <!-- Add actions buttons -->

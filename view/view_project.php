@@ -11,9 +11,15 @@ require_once "../model/tasks.php";
 $id = get_session_user_id();
 $user = get_user_by_id($id);
 $project_id = filter_input(INPUT_POST, 'id');
+$search = filter_input(INPUT_POST, 'search');
 if ($project_id === NULL) { $project_id = filter_input(INPUT_GET, 'id'); }
 $project = get_project_by_id($project_id);
-$tasks = get_tasks_by_project($project_id);
+
+if (empty($search)) {
+    $tasks = get_tasks_by_project($project_id);
+} else {
+    $tasks = search_tasks_for_project($project_id, $search);
+}
 
 ?>
 
@@ -58,6 +64,12 @@ $tasks = get_tasks_by_project($project_id);
         <label style="font-size: 20px; font-weight: bold;" >Tasks: <?php echo sizeof(get_tasks_by_project($project_id)) ?></label>
         <input type="submit" value="Create Task">
     </form><br>
+
+    <form action="." method="post" style="float: right; margin-top: -35px" >
+        <input type="hidden" name="action" value="view_project">
+        <input type="hidden" name="id" value="<?php echo $project_id ?>">
+        <input type="text" name="search" value="<?php echo $search ?>" placeholder="Search..." >
+    </form>
 
     <!-- Tasks table -->
     <table style="width: 100%" >

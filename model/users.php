@@ -18,21 +18,20 @@ function get_user_by_id($id) {
     return $stmt->fetch();
 }
 
-function count_users() {
+function add_user($username, $hash) {
     global $db;
-    $stmt = $db->prepare("SELECT COUNT(id) FROM users");
-    $stmt->execute();
-    $data = $stmt->fetchAll();
-    return $data[0][0];
-}
 
-function add_user($id, $username, $hash) {
-    global $db;
-    $stmt = $db->prepare("INSERT INTO users VALUES (:id, :username, :hash)");
-    $stmt->bindValue(":id", $id);
+    // create user
+    $stmt = $db->prepare("INSERT INTO users VALUES (LAST_INSERT_ID(), :username, :hash)");
     $stmt->bindValue(":username", $username);
     $stmt->bindValue(":hash", $hash);
     $stmt->execute();
+
+    // get the assigned id
+    $stmt = $db->prepare("SELECT id from users WHERE username=:username");
+    $stmt->bindValue(":username", $username);
+    $stmt->execute();
+    return $stmt->fetch()['id'];
 } 
 
 ?>

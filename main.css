@@ -3,12 +3,13 @@ html {
     background-color: rgb(192, 192, 192);
 }
 body {
-    margin-top: 0;
+    /* margin-top: 0; */
     font-family: Arial, Helvetica, sans-serif;
     width: 760px;
-    margin: 0 auto;
+    margin: 20px auto;
     background-color: white;
     border: 1px solid black;
+    border-radius: 10px;
     padding: .5em 2em;
 }
 header {

@@ -86,7 +86,13 @@ if (empty($search)) {
             <tr>
                 <!-- Add the main information -->
                 <th><?php echo $task['title'] ?></th>
-                <th><?php echo $task['description'] ?></th>
+                <th><?php
+                    $description = $task['description'];
+                    if (strlen($description) > 60) {
+                        $description = substr($description, 0, 57) . "...";
+                    }
+                    echo $description
+                ?></th>
                 <th><?php echo $task['category'] ?></th>
 
                 <!-- Add status -->

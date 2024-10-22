@@ -55,8 +55,7 @@ switch($action) {
         }
 
         $hash = password_hash($password, PASSWORD_BCRYPT);  // create password hash
-        $id = count_users();                                // count users to get ID
-        add_user($id, $username, $hash);                    // insert new user
+        $id = add_user($username, $hash);                    // insert new user
         assign_session($id);                                // create session token
         header("Location: .?action=homepage");
         break;

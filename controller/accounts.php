@@ -46,8 +46,6 @@ function login($username, $password) {
     // get user and validate
     $user = get_user_by_name($username);
     if ($user == NULL || !password_verify($password, $user['hash'])) {
-        // $error = "Username or password is incorrect";
-        // header("Location: .?action=login&error=$error");
         return LoginResult::FAIL;
     }
 

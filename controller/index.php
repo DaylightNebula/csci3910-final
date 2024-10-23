@@ -6,6 +6,8 @@ require_once "model/sessions.php";
 require_once "model/tasks.php";
 require_once "model/users.php";
 
+require_once "controller/accounts.php";
+
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
@@ -37,30 +39,25 @@ switch($action) {
     // build an account when asked from a username, password, and password confirmation
     // fails, returning with an error if the passwords do not match or the username is taken
     case "build_account":
-        // get username and password
+        // get username and password and attempt to build the account
         $username = filter_input(INPUT_POST, 'username');
         $password = filter_input(INPUT_POST, 'password');
         $password_confirm = filter_input(INPUT_POST, 'password_confirm');
+        $result = build_account($username, $password, $password_confirm);
 
-        // check password
-        if ($password != $password_confirm) {
-            $error = "Passwords must match!";
-            header("Location: .?action=create_account&error=$error");
-            break;
+        switch ($result) {
+            case BuildAccountResult::PASSWORD_MISMATCH:
+                $error = "Passwords must match!";
+                header("Location: .?action=create_account&error=$error");
+                break;
+            case BuildAccountResult::USERNAME_TAKEN:
+                $error = "User with that username already exists";
+                header("Location: .?action=create_account&error=$error");
+                break;
+            case BuildAccountResult::SUCCESS:
+                header("Location: .?action=homepage");
+                break;
         }
-
-        // check if username exists
-        $user = get_user_by_name($username);
-        if ($user != NULL) {
-            $error = "User with that username already exists";
-            header("Location: .?action=create_account&error=$error");
-            break;
-        }
-
-        $hash = password_hash($password, PASSWORD_BCRYPT);  // create password hash
-        $id = add_user($username, $hash);                    // insert new user
-        assign_session($id);                                // create session token
-        header("Location: .?action=homepage");
         break;
     
     // allows a user to login with a username and password
@@ -70,18 +67,20 @@ switch($action) {
         // get username and password
         $username = filter_input(INPUT_POST, 'username');
         $password = filter_input(INPUT_POST, 'password');
+        $result = login($username, $password);
 
-        // get user and validate
-        $user = get_user_by_name($username);
-        if ($user == NULL || !password_verify($password, $user['hash'])) {
-            $error = "Username or password is incorrect";
-            header("Location: .?action=login&error=$error");
-            break;
+        switch($result) {
+            // on success, go to homepage
+            case LoginResult::SUCCESS:
+                header("Location: .?action=homepage");
+                break;
+
+            // on fail, go to error
+            case LoginResult::FAIL:
+                $error = "Username or password is incorrect";
+                header("Location: .?action=login&error=$error");
+                break;
         }
-
-        // assign session
-        $token = assign_session($user['id']);
-        header("Location: .?action=homepage");
         break;
     
     // when asked, clear the current session and return to the login page

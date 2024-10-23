@@ -3,10 +3,10 @@
 
 <?php
 
-require_once "../model/db.php";
-require_once "../model/projects.php";
-require_once "../model/sessions.php";
-require_once "../model/tasks.php";
+require_once "model/db.php";
+require_once "model/projects.php";
+require_once "model/sessions.php";
+require_once "model/tasks.php";
 
 $id = get_session_user_id();
 $user = get_user_by_id($id);
@@ -26,7 +26,7 @@ if (empty($search)) {
 <!-- Define Title and Style -->
 <head>
     <title>View Project: <?php echo $project['title'] ?></title>
-    <link rel="stylesheet" href="../main.css"/>
+    <link rel="stylesheet" href="main.css"/>
 </head>
 
 <body>

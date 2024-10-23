@@ -1,6 +1,6 @@
 <?php
 
-require_once "../model/db.php";
+require_once "model/db.php";
 
 function assign_session($id) {
     global $db;

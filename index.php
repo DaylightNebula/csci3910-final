@@ -1,3 +1,3 @@
 <?php
-header("Location: controller?action=homepage")
+include "controller/index.php"
 ?>

@@ -11,7 +11,7 @@ if ($error == NULL) {
 <!-- Title -->
 <head>
     <title>Create Account</title>
-    <link rel="stylesheet" href="../main.css"/>
+    <link rel="stylesheet" href="main.css"/>
 </head>
 
 <!-- Table and add button -->

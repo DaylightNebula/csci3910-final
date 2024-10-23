@@ -1,14 +1,17 @@
 <?php
 
-require_once "../model/db.php";
-require_once "../model/projects.php";
-require_once "../model/sessions.php";
-require_once "../model/tasks.php";
-require_once "../model/users.php";
+require_once "model/db.php";
+require_once "model/projects.php";
+require_once "model/sessions.php";
+require_once "model/tasks.php";
+require_once "model/users.php";
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
+}
+if ($action == NULL) {
+    $action = "homepage";
 }
 
 switch($action) {
@@ -17,7 +20,7 @@ switch($action) {
         $id = get_session_user_id();
 
         if ($id !== NULL) { 
-            include("../view/homepage.php");
+            include("view/homepage.php");
         } else { 
             header("Location: .?action=login");
         }
@@ -25,10 +28,10 @@ switch($action) {
     
     // display login and create account pages when asked
     case "login":
-        include ("../view/login.php");
+        include ("view/login.php");
         break;
     case "create_account":
-        include ("../view/create_account.php");
+        include ("view/create_account.php");
         break;
     
     // build an account when asked from a username, password, and password confirmation
@@ -89,7 +92,7 @@ switch($action) {
     
     // display the create or edit project screen
     case "create_project":
-        include "../view/create_edit_project.php";
+        include "view/create_edit_project.php";
         break;
     
     // when asked finalize the creation or editing of a project
@@ -162,10 +165,10 @@ switch($action) {
     
     // display the view project and create tasks screens
     case "view_project":
-        include "../view/view_project.php";
+        include "view/view_project.php";
         break;
     case "create_task":
-        include "../view/create_edit_task.php";
+        include "view/create_edit_task.php";
         break;
 }
 

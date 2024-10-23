@@ -1,6 +1,6 @@
 <?php
 
-require_once "../model/db.php";
+require_once "model/db.php";
 
 function create_project($owner, $title, $description) {
     global $db;

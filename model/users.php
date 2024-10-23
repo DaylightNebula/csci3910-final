@@ -1,6 +1,6 @@
 <?php
 
-require_once "../model/db.php";
+require_once "model/db.php";
 
 function get_user_by_name($username) {
     global $db;

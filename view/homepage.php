@@ -3,8 +3,8 @@
 
 <?php
 
-require_once "../model/db.php";
-require_once "../model/projects.php";
+require_once "model/db.php";
+require_once "model/projects.php";
 
 $user = get_user_by_id($id);
 $project_count = projects_owned_by_user($id);
@@ -15,7 +15,7 @@ $projects = get_projects_by_owner($id);
 <!-- Title -->
 <head>
     <title>Todo Home</title>
-    <link rel="stylesheet" href="../main.css"/>
+    <link rel="stylesheet" href="main.css"/>
 </head>
 
 <!-- Table and add button -->

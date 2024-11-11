@@ -21,7 +21,7 @@
         <br>
 
         Password
-        <input type="text" name="password" value="">
+        <input type="password" name="password" value="">
         <br>
         
         <input type="submit" value="Login">

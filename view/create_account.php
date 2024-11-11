@@ -29,11 +29,11 @@ if ($error == NULL) {
         <br>
 
         Password
-        <input type="text" name="password" value="">
+        <input type="password" name="password" value="">
         <br>
 
         Confirm Password
-        <input type="text" name="password_confirm" value="">
+        <input type="password" name="password_confirm" value="">
         <br>
         
         <input type="submit" value="Create Account">
